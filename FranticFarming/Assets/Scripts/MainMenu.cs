@@ -45,6 +45,7 @@ public class MainMenu : MonoBehaviour
         else
         {
             levelOneBestScore.text = "0000";
+            PlayerPrefs.SetInt("LevelOneScore", 0);
         }
         if (PlayerPrefs.HasKey("LevelTwoStars"))
         {
@@ -63,11 +64,12 @@ public class MainMenu : MonoBehaviour
         }
         if (PlayerPrefs.HasKey("LevelTwoScore"))
         {
-        levelTwoBestScore.text = PlayerPrefs.GetInt("LevelOneScore").ToString();
+        levelTwoBestScore.text = PlayerPrefs.GetInt("LevelTwoScore").ToString();
         }
         else
         {
             levelTwoBestScore.text = "0000";
+            PlayerPrefs.SetInt("LevelTwoScore", 0);
         }
     }
     

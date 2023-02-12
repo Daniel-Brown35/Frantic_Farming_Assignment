@@ -112,13 +112,19 @@ public class Timer : MonoBehaviour
             star1Image.sprite = earnedStar;
             if (SceneManager.GetActiveScene().name == "LevelOneScene")
             {
-            PlayerPrefs.SetInt("LevelOneStars", 1);
-                PlayerPrefs.SetInt("LevelOneScore", playerInventory.money);
+                PlayerPrefs.SetInt("LevelOneStars", 1);
+                if (PlayerPrefs.GetInt("LevelOneScore") < playerInventory.money)
+                {
+                 PlayerPrefs.SetInt("LevelOneScore", playerInventory.money);
+                }
             }
             if (SceneManager.GetActiveScene().name == "LevelTwoScene")
             {
                 PlayerPrefs.SetInt("LevelTwoStars", 1);
-                PlayerPrefs.SetInt("LevelTwoScore", playerInventory.money);
+                if (PlayerPrefs.GetInt("LevelTwoScore") < playerInventory.money)
+                {
+                 PlayerPrefs.SetInt("LevelTwoScore", playerInventory.money);
+                }
             }
         }
         if (playerInventory.money >= playerInventory.currentStar2Requirement)
