@@ -160,7 +160,14 @@ public class Walk : MonoBehaviour
             Vector3 lastPlayerPosition = player.transform.position;
             Vector3 forceDirection = (lastPlayerPosition - transform.position).normalized;
             player.GetComponent<Rigidbody>().velocity = forceDirection * 50;
+            if (SceneManager.GetActiveScene().name == "TutorialScene")
+            {
+                theAgent.SetDestination(gameObject.transform.position);
+            }
+            if (SceneManager.GetActiveScene().name == "LevelOneScene")
+            {
             theAgent.SetDestination(gameObject.transform.position);
+            }
             col.gameObject.GetComponent<PlayerInventory>().DropProduce();
             //hungryUI.enabled = true;
             //angerTime.enabled = true;

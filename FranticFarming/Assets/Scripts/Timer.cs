@@ -151,5 +151,13 @@ public class Timer : MonoBehaviour
     {
         levelFailed.SetActive(true);
         scoreFailed.text = playerInventory.money.ToString();
+        if (SceneManager.GetActiveScene().name == "LevelOneScene")
+        {
+            PlayerPrefs.SetInt("LevelOneScore", playerInventory.money);
+        }
+        if (SceneManager.GetActiveScene().name == "LevelTwoScene")
+        {
+            PlayerPrefs.SetInt("LevelTwoScore", playerInventory.money);
+        }
     }
 }

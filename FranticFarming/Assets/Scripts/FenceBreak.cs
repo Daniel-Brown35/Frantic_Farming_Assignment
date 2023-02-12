@@ -8,6 +8,9 @@ public class FenceBreak : MonoBehaviour
     public GameObject fenceModel;
     public GameObject brokenFenceModel;
     private bool playerInRange;
+    public BoxCollider unbrokenFenceCollider;
+    public BoxCollider leftSideBrokenFenceCollider;
+    public BoxCollider rightSideBrokenFenceCollider;
 
     public AudioSource audioSource;
     public AudioClip fenceBreakSound;
@@ -15,18 +18,23 @@ public class FenceBreak : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Collider>().isTrigger = false;
+        //GetComponent<Collider>().isTrigger = false;
         fenceModel.SetActive(true);
         brokenFenceModel.SetActive(false);
+        leftSideBrokenFenceCollider.enabled = false;
+        rightSideBrokenFenceCollider.enabled = false;
     }
 
     private void Update()
     {
         if (playerInRange == true && Input.GetKeyDown(KeyCode.R))
         {
-            GetComponent<Collider>().isTrigger = false;
+            //GetComponent<Collider>().isTrigger = false;
             fenceModel.SetActive(true);
             brokenFenceModel.SetActive(false);
+            leftSideBrokenFenceCollider.enabled = false;
+            rightSideBrokenFenceCollider.enabled = false;
+            unbrokenFenceCollider.enabled = true;
         }
     }
     void OnCollisionEnter(Collision col)
@@ -38,7 +46,10 @@ public class FenceBreak : MonoBehaviour
                 {
                     brokenFenceModel.SetActive(true);
                     fenceModel.SetActive(false);
-                    GetComponent<Collider>().isTrigger = true;
+                    //GetComponent<Collider>().isTrigger = true;
+                    leftSideBrokenFenceCollider.enabled = true;
+                    rightSideBrokenFenceCollider.enabled = true;
+                    unbrokenFenceCollider.enabled = false;
                     audioSource.PlayOneShot(fenceBreakSound);
                 }
             }   

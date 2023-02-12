@@ -49,7 +49,7 @@ public class TradingPost : MonoBehaviour
         }
         if (SceneManager.GetActiveScene().name == "LevelTwoScene")
         {
-            timer = GameObject.Find("Timer").GetComponent<Timer>();
+            timer = GameObject.Find("PlayerHUD").GetComponentInChildren<Timer>();
             tpSlider.maxValue = timer.levelTimeLimit;
             tpStar1Text.text = GameObject.Find("EventSystem").GetComponent<LevelTwoRequirements>().star1Requirement.ToString();
             tpStar2Text.text = GameObject.Find("EventSystem").GetComponent<LevelTwoRequirements>().star2Requirement.ToString();

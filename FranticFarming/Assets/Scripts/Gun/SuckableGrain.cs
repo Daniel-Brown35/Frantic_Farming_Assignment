@@ -9,7 +9,7 @@ public class SuckableGrain : MonoBehaviour
     private Gun gun;
     public float moveSpeed;
     private Rigidbody rb;
-    private bool canSuck;
+    public bool canSuck;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +22,10 @@ public class SuckableGrain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            canSuck = false;
+        }
         if (gun.playerSucking == true && canSuck == true)
         {
             rb.useGravity = false;
@@ -40,21 +44,6 @@ public class SuckableGrain : MonoBehaviour
                 gun.HarvestedGrain();
                 Destroy(gameObject);
             }
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name == "SuckableArea")
-        {
-            canSuck = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.name == "SuckableArea")
-        {
-            canSuck = false;
         }
     }
 }

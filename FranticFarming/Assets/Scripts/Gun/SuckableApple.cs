@@ -9,7 +9,7 @@ public class SuckableApple : MonoBehaviour
     private Gun gun;
     public float moveSpeed;
     private Rigidbody rb;
-    private bool canSuck;
+    public bool canSuck;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +22,10 @@ public class SuckableApple : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            canSuck = false;
+        }
         if (gun.playerSucking == true && canSuck == true)
         {
             rb.useGravity = false;
@@ -34,25 +38,11 @@ public class SuckableApple : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collider)
     {
-            if (collider.gameObject.name == "Player" && gun.playerSucking == true && gun.appleAmmoLeft < gun.magazineSize)
-            {
-                gun.HarvestedApple();
-                Destroy(gameObject);
-            }
-        
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name == "SuckableArea")
+        if (collider.gameObject.name == "Player" && gun.playerSucking == true && gun.appleAmmoLeft < gun.magazineSize)
         {
-            canSuck = true;
+            gun.HarvestedApple();
+            Destroy(gameObject);
         }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.name == "SuckableArea")
-        {
-            canSuck = false;
-        }
+
     }
 }
