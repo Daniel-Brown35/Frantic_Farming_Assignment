@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FenceBreak : MonoBehaviour
+public class TutorialFenceBreak : MonoBehaviour
 {
     
     public GameObject fenceModel;
@@ -32,7 +32,7 @@ public class FenceBreak : MonoBehaviour
     {
         if (col.gameObject.tag == "Animal")
         {  
-            if (col.gameObject.GetComponent<Walk>().chasing == true)
+            if (col.gameObject.GetComponent<WalkTutorial>().chasing == true)
             {
                 {
                     brokenFenceModel.SetActive(true);

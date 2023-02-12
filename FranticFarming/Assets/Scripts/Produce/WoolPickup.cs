@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EggPickup : MonoBehaviour
+public class WoolPickup : MonoBehaviour
 {
     private PlayerInventory playerInventory;
     private bool doOnce;
 
+
     private AudioSource audioSource;
     public AudioClip pickupSound;
-
 
     private void Start()
     {
@@ -19,13 +19,13 @@ public class EggPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.name == "PlayerModel")
+        if (collision.gameObject.name == "Player")
         {
-            if (doOnce == false && playerInventory.eggCount < 9)
+            if (doOnce == false && playerInventory.woolCount < 9)
             {
                 doOnce = true;
                 audioSource.PlayOneShot(pickupSound);
-                playerInventory.AddEgg(1);
+                playerInventory.AddWool(1);
                 playerInventory.UpdateHUD();
                 Destroy(gameObject);
             }

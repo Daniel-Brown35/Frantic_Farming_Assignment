@@ -8,13 +8,13 @@ using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 
-public class Walk : MonoBehaviour
+public class WalkTutorial : MonoBehaviour
 {
     public GameObject Player;
     public GameObject angerTimer;
     public GameObject thoughtBubble;
-    public HungryUi hungryUI;
-    public AngerTime angerTime;
+    public HungryUiTutorial hungryUITutorial;
+    public AngerTimeTutorial angerTimeTutorial;
     public Vector3 Destination;
     NavMeshAgent theAgent;
     public int MaxTime;
@@ -54,14 +54,14 @@ public class Walk : MonoBehaviour
         Delay = Random.Range(0, MaxTime);
         theAgent = GetComponent<NavMeshAgent>();
         Invoke("move", Delay);
-        hungryUI = GetComponentInChildren(typeof(HungryUi)) as HungryUi;
+        hungryUITutorial = GetComponentInChildren(typeof(HungryUiTutorial)) as HungryUiTutorial;
 
     }
 
 
     void Update()
     {
-        float percent = angerTime.timeLeft / angerTime.maxTime;
+        float percent = angerTimeTutorial.timeLeft / angerTimeTutorial.maxTime;
         poopSpawnTimer += Time.deltaTime;
         if (percent <= 0)
         {
@@ -69,8 +69,8 @@ public class Walk : MonoBehaviour
             {
                 chaseDoOnce = true;
                 chasing = true;
-                hungryUI.enabled = false;
-                angerTime.enabled = false;
+                hungryUITutorial.enabled = false;
+                angerTimeTutorial.enabled = false;
                 thoughtBubble.SetActive(false);
                 angerTimer.SetActive(false);
             }
@@ -110,11 +110,11 @@ public class Walk : MonoBehaviour
     }
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == hungryUI.want)
+        if (col.gameObject.tag == hungryUITutorial.want)
         {
             reset = true;
             audioSource.PlayOneShot(eatSound);
-            hungryUI.ResetVariables();
+            hungryUITutorial.ResetVariables();
             if (waitingForPacification == true)
             {
                 Pacified();
@@ -129,8 +129,8 @@ public class Walk : MonoBehaviour
             player.GetComponent<Rigidbody>().velocity = forceDirection * 50;
             theAgent.SetDestination(gameObject.transform.position);
             col.gameObject.GetComponent<PlayerInventory>().DropProduce();
-            hungryUI.enabled = true;
-            angerTime.enabled = true;
+            hungryUITutorial.enabled = true;
+            angerTimeTutorial.enabled = true;
             thoughtBubble.SetActive(true);
             angerTimer.SetActive(true);
             waitingForPacification = true;
@@ -145,8 +145,8 @@ public class Walk : MonoBehaviour
 
     void Pacified()
     {
-        hungryUI.enabled = false;
-        angerTime.enabled = false;
+        hungryUITutorial.enabled = false;
+        angerTimeTutorial.enabled = false;
         thoughtBubble.SetActive(false);
         angerTimer.SetActive(false);
         canBePickedUp = true;
@@ -155,12 +155,12 @@ public class Walk : MonoBehaviour
 
     public void Repen()
     {
-        hungryUI.enabled = true;
-        angerTime.enabled = true;
+        hungryUITutorial.enabled = true;
+        angerTimeTutorial.enabled = true;
         thoughtBubble.SetActive(true);
         angerTimer.SetActive(true);
         reset = true;
-        hungryUI.ResetVariables();
+        hungryUITutorial.ResetVariables();
     }
 
     void SpawnProduce()

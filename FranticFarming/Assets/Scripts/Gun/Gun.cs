@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Gun : MonoBehaviour
 {
@@ -18,10 +19,9 @@ public class Gun : MonoBehaviour
     public float timeBetweenShots;
 
     public int magazineSize;
-    public bool allowHoldFire;
-    int grassAmmoLeft;
-    int grainAmmoLeft;
-    int appleAmmoLeft;
+    public int grassAmmoLeft;
+    public int grainAmmoLeft;
+    public int appleAmmoLeft;
     int ammoType;
 
     bool shooting;
@@ -36,6 +36,11 @@ public class Gun : MonoBehaviour
     public Slider grassSlider;
     public Slider grainSlider;
     public Slider appleSlider;
+    public Image grassAmmoHolder;
+    public Image grainAmmoHolder;
+    public Image appleAmmoHolder;
+    public Sprite selectedAmmoImage;
+    public Sprite notSelectedAmmoImage;
     public TMP_Text grassText;
     public TMP_Text grainText;
     public TMP_Text appleText;
@@ -45,24 +50,78 @@ public class Gun : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip gunSound;
 
+    public GameObject gunBarrel001Low;
+    public GameObject gunBarrel002Low;
+    public GameObject gunPart001Low;
+    public GameObject gunPart002Low;
+    public GameObject handlePart001Low;
+    public GameObject handlePart002Low;
+    public GameObject handlePart003Low;
+    public GameObject trigger001Low;
+    public GameObject triggerGuard001Low;
+    public GameObject tube001Low;
+    public GameObject tube002Low;
+    public GameObject tube003Low;
+    public GameObject tube004Low;
+    public GameObject tubePart001Low;
+    public GameObject tubePart002Low;
+    public GameObject tubePart003Low;
+    public GameObject tubePart004Low;
+    public GameObject tubePart005Low;
+    public GameObject tubePart006Low;
+    public GameObject tubePart007Low;
+    public GameObject tubePart008Low;
+    public Material gunGrassMaterial;
+    public Material gunGrainMaterial;
+    public Material gunAppleMaterial;
+
     private void Awake()
     {
         grassAmmoLeft = magazineSize;
+        grainAmmoLeft = magazineSize;
+        appleAmmoLeft = magazineSize;
+
+        if (SceneManager.GetActiveScene().name == "TutorialScene")
+        {
+            grassAmmoLeft = 3;
+            grainAmmoLeft = 3;
+            appleAmmoLeft = 3;
+        }
+
         grassSlider.maxValue = magazineSize;
         grassSlider.value = grassAmmoLeft;
         grassText.text = grassAmmoLeft.ToString();
 
-        grainAmmoLeft = magazineSize;
         grainSlider.maxValue = magazineSize;
         grainSlider.value = grainAmmoLeft;
         grainText.text = grainAmmoLeft.ToString();
 
-        appleAmmoLeft = magazineSize;
         appleSlider.maxValue = magazineSize;
         appleSlider.value = appleAmmoLeft;
         appleText.text = appleAmmoLeft.ToString();
 
         ammoType = 1;
+        grassAmmoHolder.sprite = selectedAmmoImage;
+        gunBarrel001Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        gunBarrel002Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        gunPart001Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        gunPart002Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        handlePart001Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        handlePart002Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        handlePart002Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        trigger001Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        tube001Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        tube002Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        tube003Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        tube004Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        tubePart001Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        tubePart002Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        tubePart003Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        tubePart004Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        tubePart005Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        tubePart006Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        tubePart007Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+        tubePart008Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
         readyToShoot = true;
         playerSucking = false;
 
@@ -80,21 +139,86 @@ public class Gun : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ammoType = 1;
+            grassAmmoHolder.sprite = selectedAmmoImage;
+            grainAmmoHolder.sprite = notSelectedAmmoImage;
+            appleAmmoHolder.sprite = notSelectedAmmoImage;
+            gunBarrel001Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            gunBarrel002Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            gunPart001Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            gunPart002Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            handlePart001Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            handlePart002Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            handlePart002Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            trigger001Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            tube001Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            tube002Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            tube003Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            tube004Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            tubePart001Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            tubePart002Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            tubePart003Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            tubePart004Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            tubePart005Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            tubePart006Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            tubePart007Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
+            tubePart008Low.GetComponent<MeshRenderer>().material = gunGrassMaterial;
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             ammoType = 2;
+            grassAmmoHolder.sprite = notSelectedAmmoImage;
+            grainAmmoHolder.sprite = selectedAmmoImage;
+            appleAmmoHolder.sprite = notSelectedAmmoImage;
+            gunBarrel001Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            gunBarrel002Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            gunPart001Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            gunPart002Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            handlePart001Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            handlePart002Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            handlePart002Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            trigger001Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            tube001Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            tube002Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            tube003Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            tube004Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            tubePart001Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            tubePart002Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            tubePart003Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            tubePart004Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            tubePart005Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            tubePart006Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            tubePart007Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
+            tubePart008Low.GetComponent<MeshRenderer>().material = gunGrainMaterial;
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             ammoType = 3;
+            grassAmmoHolder.sprite = notSelectedAmmoImage;
+            grainAmmoHolder.sprite = notSelectedAmmoImage;
+            appleAmmoHolder.sprite = selectedAmmoImage;
+            gunBarrel001Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            gunBarrel002Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            gunPart001Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            gunPart002Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            handlePart001Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            handlePart002Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            handlePart002Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            trigger001Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            tube001Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            tube002Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            tube003Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            tube004Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            tubePart001Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            tubePart002Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            tubePart003Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            tubePart004Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            tubePart005Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            tubePart006Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            tubePart007Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
+            tubePart008Low.GetComponent<MeshRenderer>().material = gunAppleMaterial;
         }
 
-        if (allowHoldFire == true)
-        {
-            shooting = Input.GetKey(KeyCode.Mouse0);
-        }
-        else shooting = Input.GetKeyDown(KeyCode.Mouse0);
+        shooting = Input.GetKeyDown(KeyCode.Mouse0);
 
         if (Input.GetKey(KeyCode.Mouse1))
         {
@@ -106,16 +230,6 @@ public class Gun : MonoBehaviour
             suckableArea.enabled = false;
             playerSucking = false;
         }
-
-
-        //if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && reloading == false)
-        //{
-        //    Reload();
-        //}
-        //if (readyToShoot == true && shooting == true && reloading == false && bulletsLeft <= 0)
-        //{
-        //    Reload();
-        //}
 
         switch (ammoType)
         {
@@ -278,16 +392,4 @@ public class Gun : MonoBehaviour
         appleSlider.value = appleAmmoLeft;
         appleText.text = appleAmmoLeft.ToString();
     }
-
-    //private void Reload()
-    //{
-    //    reloading = true;
-    //    Invoke("ReloadFinished", reloadTime);
-    //}
-
-    //private void ReloadFinished()
-    //{
-    //    bulletsLeft = magazineSize;
-    //    reloading = false;
-    //}
 }

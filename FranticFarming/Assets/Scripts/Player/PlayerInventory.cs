@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -48,7 +49,29 @@ public class PlayerInventory : MonoBehaviour
 
     private LevelOneRequirements levelOneRequirements;
     private LevelTwoRequirements levelTwoRequirements;
-    
+    private TutorialRequirements tutorialRequirements;
+
+    private float angle;
+    private float degreesBetweenSpawns;
+    private Vector3 startPosition;
+    private float radius = 10f;
+    public GameObject milkProduce;
+    public GameObject eggProduce;
+    public GameObject woolProduce;
+    public float produceSpeed;
+    private bool tempDisableCollision;
+    private float delay;
+
+    private bool doOnceLevelComplete;
+    public AudioClip levelCompleteSound;
+    public TMP_Text score;
+    public GameObject lcStar1;
+    public GameObject lcStar2;
+    public GameObject lcStar3;
+    private Image lcStar1Image;
+    private Image lcStar2Image;
+    private Image lcStar3Image;
+    private GameObject levelComplete;
 
     // Start is called before the first frame update
     void Start()
@@ -73,6 +96,37 @@ public class PlayerInventory : MonoBehaviour
             currentStar1Requirement = levelOneRequirements.star1Requirement;
             currentStar2Requirement = levelOneRequirements.star2Requirement;
             currentStar3Requirement = levelOneRequirements.star3Requirement;
+        }
+        if (SceneManager.GetActiveScene().name == "TutorialScene")
+        {
+            tutorialRequirements = GameObject.Find("EventSystem").GetComponent<TutorialRequirements>();
+            currentStar1Requirement = tutorialRequirements.star1Requirement;
+            currentStar2Requirement = tutorialRequirements.star2Requirement;
+            currentStar3Requirement = tutorialRequirements.star3Requirement;
+        }
+        if (SceneManager.GetActiveScene().name == "TutorialScene")
+        {
+        levelComplete = GameObject.Find("LevelCompleteScreen");
+        lcStar1Image = lcStar1.GetComponent<Image>();
+        lcStar2Image = lcStar2.GetComponent<Image>();
+        lcStar3Image = lcStar3.GetComponent<Image>();
+        levelComplete.SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        if (tempDisableCollision == true)
+        {
+            gameObject.GetComponent<BoxCollider>().enabled = false;        
+            delay += Time.deltaTime;
+            if (delay >= 1f)
+            {
+                tempDisableCollision = false;
+                delay = 0f;
+                gameObject.GetComponent<BoxCollider>().enabled = true; 
+            }
+
         }
     }
 
@@ -105,6 +159,90 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    public void DropProduce()
+    {
+        tempDisableCollision = true;
+
+        degreesBetweenSpawns = 360f / milkCount; 
+        
+        angle = 0f;
+        startPosition = GameObject.Find("Player").transform.position;
+
+        for (int i = 0; i < milkCount; i++) 
+        {
+            float produceDirXPosition = startPosition.x + Mathf.Sin((angle * Mathf.PI) / 180) * radius; 
+            float produceDirYPosition = startPosition.y + Mathf.Cos((angle * Mathf.PI) / 180) * radius; 
+            float produceDirZPosition = startPosition.z + Mathf.Tan((angle * Mathf.PI) / 180) * radius;
+
+            produceDirXPosition += 2f;
+            produceDirYPosition += 2f;
+            produceDirZPosition += 2f;
+
+            Vector3 produceVector = new Vector3(produceDirXPosition, produceDirYPosition, produceDirZPosition); 
+            Vector3 produceMoveDirection = (produceVector - startPosition).normalized * produceSpeed; 
+
+
+
+            GameObject produceDrops = Instantiate(milkProduce, startPosition, Quaternion.identity); 
+            produceDrops.GetComponent<Rigidbody>().velocity = new Vector3(produceMoveDirection.x, produceMoveDirection.y, produceMoveDirection.z); 
+
+
+            angle += degreesBetweenSpawns; 
+        }
+        milkCount = 0;
+
+        degreesBetweenSpawns = 360f / eggCount;
+        angle = 0f;
+
+        for (int i = 0; i < eggCount; i++)
+        {
+            float produceDirXPosition = startPosition.x + Mathf.Sin((angle * Mathf.PI) / 180) * radius;
+            float produceDirYPosition = startPosition.y + Mathf.Cos((angle * Mathf.PI) / 180) * radius;
+            float produceDirZPosition = startPosition.z + Mathf.Tan((angle * Mathf.PI) / 180) * radius;
+
+            produceDirXPosition += 2f;
+            produceDirYPosition += 2f;
+            produceDirZPosition += 2f;
+
+            Vector3 produceVector = new Vector3(produceDirXPosition, produceDirYPosition, produceDirZPosition);
+            Vector3 produceMoveDirection = (produceVector - startPosition).normalized * produceSpeed;
+
+
+            GameObject produceDrops = Instantiate(eggProduce, startPosition, Quaternion.identity);
+            produceDrops.GetComponent<Rigidbody>().velocity = new Vector3(produceMoveDirection.x, produceMoveDirection.y, produceMoveDirection.z);
+
+
+            angle += degreesBetweenSpawns;
+        }
+        eggCount = 0;
+
+        degreesBetweenSpawns = 360f / woolCount;
+        angle = 0f;
+
+        for (int i = 0; i < woolCount; i++)
+        {
+            float produceDirXPosition = startPosition.x + Mathf.Sin((angle * Mathf.PI) / 180) * radius;
+            float produceDirYPosition = startPosition.y + Mathf.Cos((angle * Mathf.PI) / 180) * radius;
+            float produceDirZPosition = startPosition.z + Mathf.Tan((angle * Mathf.PI) / 180) * radius;
+
+            produceDirXPosition += 2f;
+            produceDirYPosition += 2f;
+            produceDirZPosition += 2f;
+
+            Vector3 produceVector = new Vector3(produceDirXPosition, produceDirYPosition, produceDirZPosition);
+            Vector3 produceMoveDirection = (produceVector - startPosition).normalized * produceSpeed;
+
+
+            GameObject produceDrops = Instantiate(woolProduce, startPosition, Quaternion.identity);
+            produceDrops.GetComponent<Rigidbody>().velocity = new Vector3(produceMoveDirection.x, produceMoveDirection.y, produceMoveDirection.z);
+
+
+            angle += degreesBetweenSpawns;
+        }
+        woolCount = 0;
+        UpdateHUD();
+    }
+
     public void UpdateHUD()
     {
         if (milkCount < 9)
@@ -124,6 +262,34 @@ public class PlayerInventory : MonoBehaviour
         woolTextHUD.text = woolCount.ToString();
         moneyTextHUD.text = money.ToString();
         UpdateStar();
+
+        if (SceneManager.GetActiveScene().name == "TutorialScene")
+        {
+            if (money >= currentStar1Requirement)
+            {
+                if (doOnceLevelComplete == false)
+                {
+                    doOnceLevelComplete = true;
+                    audioSource.PlayOneShot(levelCompleteSound);
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    levelComplete.SetActive(true);
+                    score.text = money.ToString();
+                    if (money >= currentStar1Requirement)
+                    {
+                        lcStar1Image.sprite = earnedStar;
+                    }
+                    if (money >= currentStar2Requirement)
+                    {
+                        lcStar2Image.sprite = earnedStar;
+                    }
+                    if (money >= currentStar3Requirement)
+                    {
+                        lcStar3Image.sprite = earnedStar;
+                    }
+                }
+            }
+        }
     }
 
     public void UpdateStar()

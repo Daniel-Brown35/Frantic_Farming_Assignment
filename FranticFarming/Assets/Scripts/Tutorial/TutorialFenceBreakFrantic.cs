@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FenceBreak : MonoBehaviour
+public class TutorialFenceBreakFrantic : MonoBehaviour
 {
     
     public GameObject fenceModel;
@@ -15,7 +15,6 @@ public class FenceBreak : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Collider>().isTrigger = false;
         fenceModel.SetActive(true);
         brokenFenceModel.SetActive(false);
     }
@@ -23,21 +22,22 @@ public class FenceBreak : MonoBehaviour
     {
         if (playerInRange == true && Input.GetKeyDown(KeyCode.R))
         {
-            GetComponent<Collider>().isTrigger = false;
+            GetComponent<BoxCollider>().enabled = true;
             fenceModel.SetActive(true);
             brokenFenceModel.SetActive(false);
+            GameObject.Find("TutorialGate2").GetComponent<TutorialGate2>().fenceRepaired = true;
         }
     }
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Animal")
         {  
-            if (col.gameObject.GetComponent<Walk>().chasing == true)
+            if (col.gameObject.GetComponent<WalkTutorialFrantic>().chasing == true)
             {
                 {
                     brokenFenceModel.SetActive(true);
                     fenceModel.SetActive(false);
-                    GetComponent<Collider>().isTrigger = true;
+                    GetComponent<BoxCollider>().enabled = false;
                     audioSource.PlayOneShot(fenceBreakSound);
                 }
             }   

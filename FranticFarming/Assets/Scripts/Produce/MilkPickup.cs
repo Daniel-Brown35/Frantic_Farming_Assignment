@@ -5,7 +5,7 @@ using UnityEngine;
 public class MilkPickup : MonoBehaviour
 {
     private PlayerInventory playerInventory;
-    private bool doOnce;
+    private bool doOnce = false;
 
 
     private AudioSource audioSource;
@@ -19,7 +19,7 @@ public class MilkPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.name == "PlayerModel")
+        if (collision.gameObject.name == "Player")
         {
             if (doOnce == false && playerInventory.milkCount < 9)
             {

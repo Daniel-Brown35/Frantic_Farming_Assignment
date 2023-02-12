@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-public class HungryUi : MonoBehaviour
+public class HungryUiTutorialFrantic : MonoBehaviour
 {
     [SerializeField] GameObject _object;
-    public AngerTime script;
+    public AngerTimeTutorialFrantic angerTimeTutorialFranticScript;
     public Image image1;
     public Image image2;
     public Image image3;
@@ -24,12 +25,14 @@ public class HungryUi : MonoBehaviour
     private bool doOnce1T;
     private bool doOnce2T;
     private bool doOnce3T;
+    private float percent;
+    public bool openGate1;
 
     // Update is called once per frame
     void Update()
     {
+        percent = angerTimeTutorialFranticScript.timeLeft / angerTimeTutorialFranticScript.maxTime;
         transform.rotation = Quaternion.LookRotation(transform.position - _object.transform.position);
-        float percent = script.timeLeft / script.maxTime;
 
         if (percent < 0.25 && doOnce3T == false)
         {
@@ -138,5 +141,6 @@ public class HungryUi : MonoBehaviour
         image2.enabled = false;
         image3.enabled = false;
         want = "";
+        openGate1 = true;
     }
 }

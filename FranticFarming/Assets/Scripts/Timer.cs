@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 public class Timer : MonoBehaviour
 {
     public Slider timerSlider;
@@ -39,18 +39,25 @@ public class Timer : MonoBehaviour
         stopTimer = false;
         timerSlider.maxValue = levelTimeLimit;
         timerSlider.value = gameTime;
+        if (SceneManager.GetActiveScene().name != "TutorialScene")
+        {
         levelComplete = GameObject.Find("LevelCompleteScreen");
         star1Image = star1.GetComponent<Image>();
         star2Image = star2.GetComponent<Image>();
         star3Image = star3.GetComponent<Image>();
         levelComplete.SetActive(false);
+        }
         playerInventory = GameObject.Find("Player").GetComponent<PlayerInventory>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (SceneManager.GetActiveScene().name != "TutorialScene")
+        {
+
         gameTime = gameTime -= Time.deltaTime;
+        }
 
         int minutes = Mathf.FloorToInt(gameTime / 60);
         int seconds = Mathf.FloorToInt(gameTime - minutes * 60f);
