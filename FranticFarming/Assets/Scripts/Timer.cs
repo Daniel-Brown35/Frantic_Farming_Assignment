@@ -7,12 +7,10 @@ using UnityEngine.SceneManagement;
 public class Timer : MonoBehaviour
 {
     public Slider timerSlider;
-    public TextMeshProUGUI timerText;
-    
-    private float gameTime;
+    public TMP_Text timerText;   
+    private float timeLeft;
     public float levelTimeLimit;
-
-    private bool stopTimer;
+    private bool timerStopped;
 
     private GameObject levelComplete;
     private PlayerInventory playerInventory;
@@ -30,15 +28,15 @@ public class Timer : MonoBehaviour
     public AudioClip levelCompleteSound;
     private bool doOnceTimeoutSound;
     private bool doOnceLevelComplete;
-    float delay = 0;
+    public float levelCompleteDelay = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameTime = levelTimeLimit;
-        stopTimer = false;
+        timeLeft = levelTimeLimit;
+        timerStopped = false;
         timerSlider.maxValue = levelTimeLimit;
-        timerSlider.value = gameTime;
+        timerSlider.value = timeLeft;
         if (SceneManager.GetActiveScene().name != "TutorialScene")
         {
         levelComplete = GameObject.Find("LevelCompleteScreen");
@@ -55,26 +53,23 @@ public class Timer : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name != "TutorialScene")
         {
-
-        gameTime = gameTime -= Time.deltaTime;
+            timeLeft = timeLeft -= Time.deltaTime;
         }
 
-        int minutes = Mathf.FloorToInt(gameTime / 60);
-        int seconds = Mathf.FloorToInt(gameTime - minutes * 60f);
+        int minutes = (int)(timeLeft / 60);
+        int seconds = (int)(timeLeft - minutes * 60f);
 
-        string textTime = string.Format("{0:0}:{1:00}", minutes, seconds);
-
-        if (gameTime <= 0)
+        if (timeLeft <= 0)
         {
-            stopTimer = true;
-            delay += Time.deltaTime;
+            timerStopped = true;
+            levelCompleteDelay += Time.deltaTime;
 
             if (doOnceTimeoutSound == false)
             {
                 doOnceTimeoutSound = true;
                 audioSource.PlayOneShot(timeoutSound);
             }
-            if (playerInventory.money >= playerInventory.currentStar1Requirement && delay >= 2f)
+            if (playerInventory.money >= playerInventory.currentStar1Requirement && levelCompleteDelay >= 2f)
             {
                 if (doOnceLevelComplete == false) 
                 {
@@ -86,13 +81,11 @@ public class Timer : MonoBehaviour
                 }
             }
         }
-
-        if (stopTimer == false)
+        if (timerStopped == false)
         {
-            timerText.text = textTime; 
-            timerSlider.value = gameTime;
+            timerText.text = minutes.ToString("00") + ":" + seconds.ToString("00"); 
+            timerSlider.value = timeLeft;
         }
-
     }
 
     void ShowLevelComplete()

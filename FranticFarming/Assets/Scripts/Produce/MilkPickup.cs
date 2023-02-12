@@ -6,10 +6,12 @@ public class MilkPickup : MonoBehaviour
 {
     private PlayerInventory playerInventory;
     private bool doOnce = false;
-
+    private bool ifDoOnce;
+    public float volume;
 
     private AudioSource audioSource;
     public AudioClip pickupSound;
+    public AudioClip inventoryFullSound;
 
     private void Start()
     {
@@ -21,6 +23,11 @@ public class MilkPickup : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
+            if (playerInventory.milkCount >= 9 && ifDoOnce == false)
+            {
+                ifDoOnce = true;
+                audioSource.PlayOneShot(inventoryFullSound, volume);
+            }
             if (doOnce == false && playerInventory.milkCount < 9)
             {
                 doOnce = true;
@@ -29,6 +36,14 @@ public class MilkPickup : MonoBehaviour
                 playerInventory.UpdateHUD();
                 Destroy(gameObject);
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name == "Player")
+        {
+            ifDoOnce = false;
         }
     }
 }

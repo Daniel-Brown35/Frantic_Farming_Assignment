@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Runtime.CompilerServices;
 
 public class Gun : MonoBehaviour
 {
@@ -74,6 +75,10 @@ public class Gun : MonoBehaviour
     public Material gunGrassMaterial;
     public Material gunGrainMaterial;
     public Material gunAppleMaterial;
+
+    public AudioClip suckedInSound;
+    public AudioSource suctionSoundSystem;
+    private bool vacuumSoundDoOnce;
 
     private void Awake()
     {
@@ -222,11 +227,18 @@ public class Gun : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Mouse1))
         {
+            if (vacuumSoundDoOnce == false)
+            {
+                vacuumSoundDoOnce = true;
+            suctionSoundSystem.Play();
+            }
             suckableArea.enabled = true;
             playerSucking = true;
         }
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
+            vacuumSoundDoOnce = false;
+            suctionSoundSystem.Stop();
             suckableArea.enabled = false;
             playerSucking = false;
         }
@@ -362,6 +374,7 @@ public class Gun : MonoBehaviour
 
     public void HarvestedGrass()
     {
+        audioSource.PlayOneShot(suckedInSound);
         grassAmmoLeft++;
         if (grassAmmoLeft > magazineSize)
         {
@@ -373,6 +386,7 @@ public class Gun : MonoBehaviour
 
     public void HarvestedGrain()
     {
+        audioSource.PlayOneShot(suckedInSound);
         grainAmmoLeft++;
         if (grainAmmoLeft > magazineSize)
         {
@@ -384,6 +398,7 @@ public class Gun : MonoBehaviour
 
     public void HarvestedApple()
     {
+        audioSource.PlayOneShot(suckedInSound);
         appleAmmoLeft++;
         if (appleAmmoLeft > magazineSize)
         {

@@ -39,7 +39,6 @@ public class GrassHarvestPoint : MonoBehaviour
         }
         if (grassStageUpTimer >= stageUpDelay)
         {
-            Debug.Log(grassCheck.GetComponentInChildren<MeshRenderer>().material == stage1Material);
             grassStageUpTimer = 0;
             
             if (grassStage == 1)

@@ -9,7 +9,7 @@ public class EggPickup : MonoBehaviour
 
     private AudioSource audioSource;
     public AudioClip pickupSound;
-
+    public AudioClip inventoryFullSound;
 
     private void Start()
     {
@@ -28,6 +28,10 @@ public class EggPickup : MonoBehaviour
                 playerInventory.AddEgg(1);
                 playerInventory.UpdateHUD();
                 Destroy(gameObject);
+            }
+            else
+            {
+                audioSource.PlayOneShot(inventoryFullSound);
             }
         }
     }
