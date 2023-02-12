@@ -9,6 +9,7 @@ public class TutorialGate1 : MonoBehaviour
     private BoxCollider gateCollider;
     public HungryUiTutorial hungryUiTutorialScript;
     private TutorialSignpost1 tutorialSignpost1;
+    public GameObject firstWallBarrier;
 
 
     // Start is called before the first frame update
@@ -25,6 +26,7 @@ public class TutorialGate1 : MonoBehaviour
     {
         if (hungryUiTutorialScript.openGate1 == true)
         {
+            firstWallBarrier.GetComponent<BoxCollider>().enabled = false;
             GetComponent<Collider>().isTrigger = false;
             openGate.SetActive(true);
             closedGate.SetActive(false);

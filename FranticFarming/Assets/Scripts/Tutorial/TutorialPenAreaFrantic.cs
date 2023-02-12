@@ -12,4 +12,12 @@ public class TutorialPenAreaFrantic : MonoBehaviour
             other.gameObject.GetComponent<WalkTutorialFrantic>().inPenArea = true;
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Animal")
+        {
+            other.gameObject.GetComponent<WalkTutorialFrantic>().inPenArea = false;
+        }
+    }
 }

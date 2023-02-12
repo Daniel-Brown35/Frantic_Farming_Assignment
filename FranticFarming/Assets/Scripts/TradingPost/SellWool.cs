@@ -21,7 +21,7 @@ public class SellWool : MonoBehaviour
         {
             audioSource.PlayOneShot(buttonSelect);
             playerInventory.woolCount--;
-            playerInventory.money += 50;
+            playerInventory.money += 10;
             playerInventory.UpdateHUD();
             tradingPost.UpdateTPHUD();
         }

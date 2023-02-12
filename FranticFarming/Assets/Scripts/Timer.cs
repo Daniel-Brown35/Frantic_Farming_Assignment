@@ -8,13 +8,15 @@ public class Timer : MonoBehaviour
 {
     public Slider timerSlider;
     public TMP_Text timerText;   
-    private float timeLeft;
+    public float timeLeft;
     public float levelTimeLimit;
-    private bool timerStopped;
+    public bool timerStopped;
 
     private GameObject levelComplete;
+    private GameObject levelFailed;
+    public TMP_Text scoreComplete;
+    public TMP_Text scoreFailed;
     private PlayerInventory playerInventory;
-    public TMP_Text score;
     public Sprite earnedStar;
     public GameObject star1;
     public GameObject star2;
@@ -28,6 +30,7 @@ public class Timer : MonoBehaviour
     public AudioClip levelCompleteSound;
     private bool doOnceTimeoutSound;
     private bool doOnceLevelComplete;
+    private bool doOnceLevelFailed;
     public float levelCompleteDelay = 0;
 
     // Start is called before the first frame update
@@ -44,6 +47,8 @@ public class Timer : MonoBehaviour
         star2Image = star2.GetComponent<Image>();
         star3Image = star3.GetComponent<Image>();
         levelComplete.SetActive(false);
+        levelFailed = GameObject.Find("LevelFailedScreen");
+        levelFailed.SetActive(false);
         }
         playerInventory = GameObject.Find("Player").GetComponent<PlayerInventory>();
     }
@@ -80,6 +85,16 @@ public class Timer : MonoBehaviour
                     ShowLevelComplete();
                 }
             }
+            if (playerInventory.money < playerInventory.currentStar1Requirement && levelCompleteDelay >= 2f)
+            {
+                if (doOnceLevelFailed == false)
+                {
+                    doOnceLevelFailed = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    ShowLevelFailed();
+                }
+            }
         }
         if (timerStopped == false)
         {
@@ -91,13 +106,19 @@ public class Timer : MonoBehaviour
     void ShowLevelComplete()
     {
         levelComplete.SetActive(true);
-        score.text = playerInventory.money.ToString();
+        scoreComplete.text = playerInventory.money.ToString();
         if (playerInventory.money >= playerInventory.currentStar1Requirement)
         {
             star1Image.sprite = earnedStar;
             if (SceneManager.GetActiveScene().name == "LevelOneScene")
             {
             PlayerPrefs.SetInt("LevelOneStars", 1);
+                PlayerPrefs.SetInt("LevelOneScore", playerInventory.money);
+            }
+            if (SceneManager.GetActiveScene().name == "LevelTwoScene")
+            {
+                PlayerPrefs.SetInt("LevelTwoStars", 1);
+                PlayerPrefs.SetInt("LevelTwoScore", playerInventory.money);
             }
         }
         if (playerInventory.money >= playerInventory.currentStar2Requirement)
@@ -107,6 +128,10 @@ public class Timer : MonoBehaviour
             {
                 PlayerPrefs.SetInt("LevelOneStars", 2);
             }
+            if (SceneManager.GetActiveScene().name == "LevelTwoScene")
+            {
+                PlayerPrefs.SetInt("LevelTwoStars", 2);
+            }
         }
         if (playerInventory.money >= playerInventory.currentStar3Requirement)
         {
@@ -115,6 +140,16 @@ public class Timer : MonoBehaviour
             {
                 PlayerPrefs.SetInt("LevelOneStars", 3);
             }
+            if (SceneManager.GetActiveScene().name == "LevelTwoScene")
+            {
+                PlayerPrefs.SetInt("LevelTwoStars", 3);
+            }
         }
+    }
+
+    void ShowLevelFailed()
+    {
+        levelFailed.SetActive(true);
+        scoreFailed.text = playerInventory.money.ToString();
     }
 }

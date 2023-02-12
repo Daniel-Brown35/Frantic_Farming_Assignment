@@ -11,6 +11,7 @@ public class TutorialGate2 : MonoBehaviour
     public bool fenceRepaired;
     private bool tutorialPassed;
     private Gun gun;
+    public GameObject secondWallBarrier;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,7 @@ public class TutorialGate2 : MonoBehaviour
         }
         if (walkTutorialFranticScript.stopChaseTutorial == true && fenceRepaired == true)
         {
+            secondWallBarrier.GetComponent<BoxCollider>().enabled = false;
             GetComponent<Collider>().isTrigger = false;
             openGate.SetActive(true);
             closedGate.SetActive(false);

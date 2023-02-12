@@ -18,6 +18,14 @@ public class LevelOneRequirements : MonoBehaviour
         GameObject.Find("SoundSystem").GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("Volume");
         GameObject.Find("Gun").GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("Volume");
         GameObject.Find("TradingPostPlaceholder").GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("Volume");
+        if (PlayerPrefs.GetInt("CameraShake") == 1)
+        {
+            GameObject.Find("Player").GetComponent<CameraShaker>().optionsShakeAllowed = true;
+        }
+        else
+        {
+            GameObject.Find("Player").GetComponent<CameraShaker>().optionsShakeAllowed = false;
+        }
     }
     public void UpdateValues()
     {
@@ -26,5 +34,13 @@ public class LevelOneRequirements : MonoBehaviour
         GameObject.Find("SoundSystem").GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("Volume");
         GameObject.Find("Gun").GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("Volume");
         GameObject.Find("TradingPostPlaceholder").GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("Volume");
+        if (PlayerPrefs.GetInt("CameraShake") == 1)
+        {
+            GameObject.Find("Player").GetComponent<CameraShaker>().optionsShakeAllowed = true;
+        }
+        else
+        {
+            GameObject.Find("Player").GetComponent<CameraShaker>().optionsShakeAllowed = false;
+        }
     }
 }

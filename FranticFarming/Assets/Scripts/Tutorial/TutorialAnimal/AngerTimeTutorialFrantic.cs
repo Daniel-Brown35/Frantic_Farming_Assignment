@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class AngerTimeTutorialFrantic : MonoBehaviour
 {
-    public bool Peace = false;
-    public bool Anger;
     public bool tutorialStopCounting;
     public bool startChase;
     public WalkTutorialFrantic shot;
@@ -38,25 +36,16 @@ public class AngerTimeTutorialFrantic : MonoBehaviour
             if (reduceTimeLeft == false)
             {
                 reduceTimeLeft = true;
-            timeLeft = 0.5f;
+                timeLeft = 0.5f;
             }
         }
         }
         timerBar.fillAmount = timeLeft / maxTime;
-        if (timeLeft <= 0)
-        {
-            Anger = true;
-
-        }
 
         if (shot.reset == true)
         {
             shot.reset = false;
             timeLeft = maxTime;
-            if (Anger == true)
-            {
-                Peace = true;
-            }
         }
 
     }

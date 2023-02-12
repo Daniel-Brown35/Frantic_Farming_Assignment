@@ -11,6 +11,7 @@ public class HungryUi : MonoBehaviour
     public Image image1;
     public Image image2;
     public Image image3;
+    public Image image4;
     public string want;
 
 
@@ -30,6 +31,11 @@ public class HungryUi : MonoBehaviour
     {
         transform.rotation = Quaternion.LookRotation(transform.position - _object.transform.position);
         float percent = script.timeLeft / script.maxTime;
+
+        if (GetComponentInParent<Walk>().needsRepenning == true)
+        {
+            image4.enabled = true;
+        }           
 
         if (percent < 0.25 && doOnce3T == false)
         {
@@ -137,6 +143,7 @@ public class HungryUi : MonoBehaviour
         image1.enabled = false;
         image2.enabled = false;
         image3.enabled = false;
+        image4.enabled = false;
         want = "";
     }
 }

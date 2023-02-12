@@ -35,7 +35,7 @@ public class SuckableGrain : MonoBehaviour
     private void OnCollisionEnter(Collision collider)
     {
         {
-            if (collider.gameObject.name == "Player" && gun.playerSucking == true)
+            if (collider.gameObject.name == "Player" && gun.playerSucking == true && gun.grainAmmoLeft < gun.magazineSize) 
             {
                 gun.HarvestedGrain();
                 Destroy(gameObject);

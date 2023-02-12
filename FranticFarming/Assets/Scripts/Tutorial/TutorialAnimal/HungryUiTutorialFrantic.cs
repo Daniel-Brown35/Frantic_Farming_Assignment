@@ -12,6 +12,7 @@ public class HungryUiTutorialFrantic : MonoBehaviour
     public Image image1;
     public Image image2;
     public Image image3;
+    public Image image4;
     public string want;
 
 
@@ -33,6 +34,11 @@ public class HungryUiTutorialFrantic : MonoBehaviour
     {
         percent = angerTimeTutorialFranticScript.timeLeft / angerTimeTutorialFranticScript.maxTime;
         transform.rotation = Quaternion.LookRotation(transform.position - _object.transform.position);
+
+        if (GetComponentInParent<WalkTutorialFrantic>().needsRepenning == true)
+        {
+            image4.enabled = true;
+        }
 
         if (percent < 0.25 && doOnce3T == false)
         {
@@ -140,6 +146,7 @@ public class HungryUiTutorialFrantic : MonoBehaviour
         image1.enabled = false;
         image2.enabled = false;
         image3.enabled = false;
+        image4.enabled = false;
         want = "";
         openGate1 = true;
     }

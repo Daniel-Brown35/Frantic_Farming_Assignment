@@ -21,7 +21,7 @@ public class SellMilk : MonoBehaviour
         {
             audioSource.PlayOneShot(buttonSelect);
             playerInventory.milkCount--;
-            playerInventory.money += 50;
+            playerInventory.money += 10;
             playerInventory.UpdateHUD();
             tradingPost.UpdateTPHUD();
         }

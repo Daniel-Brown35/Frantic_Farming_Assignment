@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,41 +9,65 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     private float volume;
     public Sprite earnedStar;
-    public GameObject tutorialStar1;
-    public GameObject tutorialStar2;
-    public GameObject tutorialStar3;
     public GameObject levelOneStar1;
     public GameObject levelOneStar2;
     public GameObject levelOneStar3;
+    public GameObject levelTwoStar1;
+    public GameObject levelTwoStar2;
+    public GameObject levelTwoStar3;
+    public TMP_Text levelOneBestScore;
+    public TMP_Text levelTwoBestScore;
 
-    void Start()
+    public void Start()
     {
         volume = PlayerPrefs.GetFloat("Volume");
         GameObject.Find("EventSystem").GetComponent<AudioSource>().volume = volume;
         GameObject.Find("SoundSystem").GetComponent<AudioSource>().volume = volume;
-        if (PlayerPrefs.GetInt("TutorialStars") >= 1)
+        if (PlayerPrefs.HasKey("LevelOneStars"))
         {
-        tutorialStar1.GetComponent<Image>().sprite = earnedStar;
+            if (PlayerPrefs.GetInt("LevelOneStars") >= 1)
+            {
+                levelOneStar1.GetComponent<Image>().sprite = earnedStar;
+            }
+            if (PlayerPrefs.GetInt("LevelOneStars") >= 2)
+            {
+                levelOneStar2.GetComponent<Image>().sprite = earnedStar;
+            }
+            if (PlayerPrefs.GetInt("LevelOneStars") >= 3)
+            {
+                levelOneStar3.GetComponent<Image>().sprite = earnedStar;
+            }
         }
-        if (PlayerPrefs.GetInt("TutorialStars") >= 2)
+        if (PlayerPrefs.HasKey("LevelOneScore"))
         {
-            tutorialStar2.GetComponent<Image>().sprite = earnedStar;
+        levelOneBestScore.text = PlayerPrefs.GetInt("LevelOneScore").ToString();
         }
-        if (PlayerPrefs.GetInt("TutorialStars") >= 3)
+        else
         {
-            tutorialStar3.GetComponent<Image>().sprite = earnedStar;
+            levelOneBestScore.text = "0000";
         }
-        if (PlayerPrefs.GetInt("LevelOneStars") >= 1)
+        if (PlayerPrefs.HasKey("LevelTwoStars"))
         {
-            levelOneStar1.GetComponent<Image>().sprite = earnedStar;
+            if (PlayerPrefs.GetInt("LevelTwoStars") >= 1)
+            {
+                levelTwoStar1.GetComponent<Image>().sprite = earnedStar;
+            }
+            if (PlayerPrefs.GetInt("LevelTwoStars") >= 2)
+            {
+                levelTwoStar2.GetComponent<Image>().sprite = earnedStar;
+            }
+            if (PlayerPrefs.GetInt("LevelTwoStars") >= 3)
+            {
+                levelTwoStar3.GetComponent<Image>().sprite = earnedStar;
+            }
         }
-        if (PlayerPrefs.GetInt("LevelOneStars") >= 2)
+        if (PlayerPrefs.HasKey("LevelTwoScore"))
         {
-            levelOneStar2.GetComponent<Image>().sprite = earnedStar;
+        levelTwoBestScore.text = PlayerPrefs.GetInt("LevelOneScore").ToString();
         }
-        if (PlayerPrefs.GetInt("LevelOneStars") >= 3)
+        else
         {
-            levelOneStar3.GetComponent<Image>().sprite = earnedStar;
+            levelTwoBestScore.text = "0000";
         }
     }
     

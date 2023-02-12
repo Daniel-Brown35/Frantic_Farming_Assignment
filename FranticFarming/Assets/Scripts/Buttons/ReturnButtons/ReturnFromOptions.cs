@@ -23,7 +23,7 @@ public class ReturnFromOptions : MonoBehaviour
         }
         if (SceneManager.GetActiveScene().name == "LevelTwoScene")
         {
-            //GameObject.Find("EventSystem").GetComponent<LevelTwoRequirements>().UpdateSensitivity();
+            GameObject.Find("EventSystem").GetComponent<LevelTwoRequirements>().UpdateValues();
         }
         optionsCanvasObject.SetActive(false);
     }

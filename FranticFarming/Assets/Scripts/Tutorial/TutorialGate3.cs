@@ -8,6 +8,7 @@ public class TutorialGate3 : MonoBehaviour
     public GameObject openGate;
     private BoxCollider gateCollider;
     private Gun gun;
+    public GameObject thirdWallBarrier;
 
 
     // Start is called before the first frame update
@@ -24,6 +25,7 @@ public class TutorialGate3 : MonoBehaviour
     {
         if (gun.grassAmmoLeft == gun.magazineSize && gun.grainAmmoLeft == gun.magazineSize && gun.appleAmmoLeft == gun.magazineSize)
         {
+            thirdWallBarrier.GetComponent<BoxCollider>().enabled = false;
             GetComponent<Collider>().isTrigger = false;
             openGate.SetActive(true);
             closedGate.SetActive(false);

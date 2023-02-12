@@ -12,4 +12,12 @@ public class PenArea : MonoBehaviour
             other.gameObject.GetComponent<Walk>().inPenArea = true;
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Animal")
+        {
+            other.gameObject.GetComponent<Walk>().inPenArea = false;
+        }
+    }
 }

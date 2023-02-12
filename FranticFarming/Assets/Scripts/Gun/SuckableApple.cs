@@ -34,7 +34,7 @@ public class SuckableApple : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collider)
     {
-            if (collider.gameObject.name == "Player" && gun.playerSucking == true)
+            if (collider.gameObject.name == "Player" && gun.playerSucking == true && gun.appleAmmoLeft < gun.magazineSize)
             {
                 gun.HarvestedApple();
                 Destroy(gameObject);

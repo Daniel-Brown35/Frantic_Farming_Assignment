@@ -21,7 +21,7 @@ public class SellEgg : MonoBehaviour
         {
             audioSource.PlayOneShot(buttonSelect);
             playerInventory.eggCount--;
-            playerInventory.money += 50;
+            playerInventory.money += 10;
             playerInventory.UpdateHUD();
             tradingPost.UpdateTPHUD();
         }

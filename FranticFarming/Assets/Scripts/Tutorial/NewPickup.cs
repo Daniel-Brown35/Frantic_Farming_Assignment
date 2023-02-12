@@ -22,16 +22,28 @@ public class NewPickup : MonoBehaviour
                 {
                     if (currentObject.gameObject.name == "TutorialAnimalCow")
                     {
+                        if (currentObject.gameObject.GetComponent<WalkTutorial>().inPenArea == true)
+                        {
                         currentObject.gameObject.GetComponent<WalkTutorial>().Repen();
+                        }
                     }
                     else
                     {
+                        if (currentObject.gameObject.GetComponent<Walk>().inPenArea == true)
+                        {
                         currentObject.gameObject.GetComponent<Walk>().Repen();
+                        }
                     }
                 }
                 if (currentObject.gameObject.name == "TutorialAnimalCowFrantic")
                 {
-                currentObject.gameObject.GetComponent<WalkTutorialFrantic>().Repen();
+                    if (currentObject.gameObject.GetComponent<WalkTutorialFrantic>().inPenArea == true)
+                    {
+                        currentObject.gameObject.GetComponent<WalkTutorialFrantic>().Repen();
+                    }
+                }
+                if (currentObject.gameObject.tag != "Poop")
+                {
                 currentObject.gameObject.GetComponent<NavMeshAgent>().enabled = true;
                 }
                 currentObject.useGravity = true;

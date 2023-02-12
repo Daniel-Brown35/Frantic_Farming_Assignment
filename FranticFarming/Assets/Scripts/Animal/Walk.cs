@@ -7,16 +7,18 @@ using UnityEngine.AI;
 using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class Walk : MonoBehaviour
 {
     public GameObject Player;
+    private CameraShaker cameraShaker;
     public GameObject angerTimer;
     public GameObject thoughtBubble;
     public HungryUi hungryUI;
     public AngerTime angerTime;
     public Vector3 Destination;
-    NavMeshAgent theAgent;
+    private NavMeshAgent theAgent;
     public int MaxTime;
     public int MaxxPos;
     public int MinxPos;
@@ -50,14 +52,24 @@ public class Walk : MonoBehaviour
     private float poopSpawnTimer;
     public float poopSpawnDelay;
 
+    public GameObject eyebrow001LowNormal;
+    public GameObject eyebrow002LowNormal;
+    public GameObject eyebrow001LowAngry;
+    public GameObject eyebrow002LowAngry;
+
     void Start()
     {
+        cameraShaker = GameObject.Find("Player").GetComponent<CameraShaker>();
         chasing = false;
         Delay = Random.Range(0, MaxTime);
         theAgent = GetComponent<NavMeshAgent>();
+        if (SceneManager.GetActiveScene().name != "TutorialScene")
+        {
         Invoke("move", Delay);
+        }
         hungryUI = GetComponentInChildren(typeof(HungryUi)) as HungryUi;
-
+        eyebrow001LowAngry.SetActive(false);
+        eyebrow002LowAngry.SetActive(false);
     }
 
 
@@ -73,18 +85,24 @@ public class Walk : MonoBehaviour
                 GameObject.Find("Player").GetComponent<CharacterController>().enabled = true;
                 resetCharController = false;
                 resetCharControllerTimer = 0f;
+                cameraShaker.shakeCamera = false;
             }
         }
         if (percent <= 0)
         {
             if (chaseDoOnce == false)
             {
+                eyebrow001LowNormal.SetActive(false);
+                eyebrow002LowNormal.SetActive(false);
+                eyebrow001LowAngry.SetActive(true);
+                eyebrow002LowAngry.SetActive(true);
                 chaseDoOnce = true;
                 chasing = true;
-                hungryUI.enabled = false;
-                angerTime.enabled = false;
-                thoughtBubble.SetActive(false);
-                angerTimer.SetActive(false);
+                waitingForPacification = true;
+                //hungryUI.enabled = false;
+                //angerTime.enabled = false;
+                //thoughtBubble.SetActive(false);
+                //angerTimer.SetActive(false);
             }
         }
         if (percent > 0)
@@ -99,7 +117,7 @@ public class Walk : MonoBehaviour
         {
             Chase();
         }
-        if (Vector3.Distance(this.gameObject.transform.position, Destination) < 0.01f)
+        if (Vector3.Distance(this.gameObject.transform.position, Destination) < 0.1f)
         {
             Invoke("move", Delay);
         }
@@ -116,7 +134,7 @@ public class Walk : MonoBehaviour
         {
         xPos = Random.Range(MaxxPos, MinxPos);
         zPos = Random.Range(MaxzPos, MinzPos);
-        Destination = new Vector3(xPos, 1.483333f, zPos);
+        Destination = new Vector3(xPos, this.gameObject.transform.position.y, zPos);
         theAgent.SetDestination(Destination);
         }
     }
@@ -136,6 +154,7 @@ public class Walk : MonoBehaviour
         {
             chasing = false;
             GameObject player = GameObject.Find("Player");
+            cameraShaker.shakeCamera = true;
             player.GetComponent<CharacterController>().enabled = false;
             resetCharController = true;
             Vector3 lastPlayerPosition = player.transform.position;
@@ -143,11 +162,11 @@ public class Walk : MonoBehaviour
             player.GetComponent<Rigidbody>().velocity = forceDirection * 50;
             theAgent.SetDestination(gameObject.transform.position);
             col.gameObject.GetComponent<PlayerInventory>().DropProduce();
-            hungryUI.enabled = true;
-            angerTime.enabled = true;
-            thoughtBubble.SetActive(true);
-            angerTimer.SetActive(true);
-            waitingForPacification = true;
+            //hungryUI.enabled = true;
+            //angerTime.enabled = true;
+            //thoughtBubble.SetActive(true);
+            //angerTimer.SetActive(true);
+            
 
         }
     }
@@ -160,16 +179,26 @@ public class Walk : MonoBehaviour
 
     void Pacified()
     {
-        hungryUI.enabled = false;
-        angerTime.enabled = false;
-        thoughtBubble.SetActive(false);
-        angerTimer.SetActive(false);
+        //hungryUI.enabled = false;
+        //angerTime.enabled = false;
+        //thoughtBubble.SetActive(false);
+        //angerTimer.SetActive(false);
+        eyebrow001LowNormal.SetActive(true);
+        eyebrow002LowNormal.SetActive(true);
+        eyebrow001LowAngry.SetActive(false);
+        eyebrow002LowAngry.SetActive(false);
+        chasing = false;
+        waitingForPacification = false;
         canBePickedUp = true;
         needsRepenning = true;
     }
 
     public void Repen()
     {
+        needsRepenning = false;
+        GetComponent<NavMeshAgent>().enabled = true;
+        Invoke("move", Delay);
+        chaseDoOnce = false;
         hungryUI.enabled = true;
         angerTime.enabled = true;
         thoughtBubble.SetActive(true);

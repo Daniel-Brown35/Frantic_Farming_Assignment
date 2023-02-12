@@ -18,6 +18,9 @@ public class PlayerInventory : MonoBehaviour
     public TMP_Text eggTextHUD;
     public TMP_Text woolTextHUD;
     public TMP_Text moneyTextHUD;
+    public TMP_Text star1TextHUD;
+    public TMP_Text star2TextHUD;
+    public TMP_Text star3TextHUD;
 
     public Sprite earnedStar;
     public Sprite nonFullMilkSprite;
@@ -96,6 +99,19 @@ public class PlayerInventory : MonoBehaviour
             currentStar1Requirement = levelOneRequirements.star1Requirement;
             currentStar2Requirement = levelOneRequirements.star2Requirement;
             currentStar3Requirement = levelOneRequirements.star3Requirement;
+            star1TextHUD.text = currentStar1Requirement.ToString();
+            star2TextHUD.text = currentStar2Requirement.ToString();
+            star3TextHUD.text = currentStar3Requirement.ToString();
+        }
+        if (SceneManager.GetActiveScene().name == "LevelTwoScene")
+        {
+            levelTwoRequirements = GameObject.Find("EventSystem").GetComponent<LevelTwoRequirements>();
+            currentStar1Requirement = levelTwoRequirements.star1Requirement;
+            currentStar2Requirement = levelTwoRequirements.star2Requirement;
+            currentStar3Requirement = levelTwoRequirements.star3Requirement;
+            star1TextHUD.text = currentStar1Requirement.ToString();
+            star2TextHUD.text = currentStar2Requirement.ToString();
+            star3TextHUD.text = currentStar3Requirement.ToString();
         }
         if (SceneManager.GetActiveScene().name == "TutorialScene")
         {
@@ -103,6 +119,9 @@ public class PlayerInventory : MonoBehaviour
             currentStar1Requirement = tutorialRequirements.star1Requirement;
             currentStar2Requirement = tutorialRequirements.star2Requirement;
             currentStar3Requirement = tutorialRequirements.star3Requirement;
+            star1TextHUD.text = currentStar1Requirement.ToString();
+            star2TextHUD.text = currentStar2Requirement.ToString();
+            star3TextHUD.text = currentStar3Requirement.ToString();
         }
         if (SceneManager.GetActiveScene().name == "TutorialScene")
         {
@@ -278,17 +297,14 @@ public class PlayerInventory : MonoBehaviour
                     if (money >= currentStar1Requirement)
                     {
                         lcStar1Image.sprite = earnedStar;
-                        PlayerPrefs.SetInt("TutorialStars", 1);
                     }
                     if (money >= currentStar2Requirement)
                     {
                         lcStar2Image.sprite = earnedStar;
-                        PlayerPrefs.SetInt("TutorialStars", 2);
                     }
                     if (money >= currentStar3Requirement)
                     {
                         lcStar3Image.sprite = earnedStar;
-                        PlayerPrefs.SetInt("TutorialStars", 3);
                     }
                 }
             }
