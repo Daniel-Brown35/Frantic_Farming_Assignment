@@ -161,8 +161,9 @@ public class WalkTutorialFrantic : MonoBehaviour
         thoughtBubble.SetActive(true);
         angerTimer.SetActive(true);
         reset = true;
-        hungryUITutorialFrantic.ResetVariables();
+        canBePickedUp = false;
         stopChaseTutorial = true;
+        hungryUITutorialFrantic.ResetVariables();
     }
 
     void SpawnProduce()

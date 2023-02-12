@@ -34,13 +34,15 @@ public class Walk : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip eatSound;
     public bool inPenArea;
-
     public GameObject produce;
     public GameObject poop;
     private GameObject poopCheck;
     public Transform produceSpawnPoint;
     public float produceTimer;
     public float produceSpawnDelay;
+    private bool resetCharController;
+    private float resetCharControllerTimer;
+    private float resetCharControllerDelay = 1f;
     //public float highHappyProduceSpawnDelay;
     //public float mediumHappyProduceSpawnDelay;
     //public float lowHappyProduceSpawnDelay;
@@ -63,6 +65,16 @@ public class Walk : MonoBehaviour
     {
         float percent = angerTime.timeLeft / angerTime.maxTime;
         poopSpawnTimer += Time.deltaTime;
+        if (resetCharController == true)
+        {
+            resetCharControllerTimer += Time.deltaTime;
+            if (resetCharControllerTimer >= resetCharControllerDelay)
+            {
+                GameObject.Find("Player").GetComponent<CharacterController>().enabled = true;
+                resetCharController = false;
+                resetCharControllerTimer = 0f;
+            }
+        }
         if (percent <= 0)
         {
             if (chaseDoOnce == false)
@@ -124,6 +136,8 @@ public class Walk : MonoBehaviour
         {
             chasing = false;
             GameObject player = GameObject.Find("Player");
+            player.GetComponent<CharacterController>().enabled = false;
+            resetCharController = true;
             Vector3 lastPlayerPosition = player.transform.position;
             Vector3 forceDirection = (lastPlayerPosition - transform.position).normalized;
             player.GetComponent<Rigidbody>().velocity = forceDirection * 50;
@@ -134,6 +148,7 @@ public class Walk : MonoBehaviour
             thoughtBubble.SetActive(true);
             angerTimer.SetActive(true);
             waitingForPacification = true;
+
         }
     }
 
@@ -160,6 +175,7 @@ public class Walk : MonoBehaviour
         thoughtBubble.SetActive(true);
         angerTimer.SetActive(true);
         reset = true;
+        canBePickedUp = false;
         hungryUI.ResetVariables();
     }
 

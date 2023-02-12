@@ -35,7 +35,7 @@ public class SuckableGrass : MonoBehaviour
     private void OnCollisionEnter(Collision collider)
     {
         {
-            if (collider.gameObject.name == "ProjectileSpawnPoint" && gun.playerSucking == true)
+            if (collider.gameObject.name == "Player" && gun.playerSucking == true)
             {
                 gun.HarvestedGrass();
                 Destroy(gameObject);

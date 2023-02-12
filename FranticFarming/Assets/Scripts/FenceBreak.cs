@@ -19,6 +19,7 @@ public class FenceBreak : MonoBehaviour
         fenceModel.SetActive(true);
         brokenFenceModel.SetActive(false);
     }
+
     private void Update()
     {
         if (playerInRange == true && Input.GetKeyDown(KeyCode.R))

@@ -2,69 +2,94 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement")]
-    public float moveSpeed;
+    public Camera playerCamera;
     public float walkSpeed;
-    public float runSpeed;
+    public float sprintSpeed;
+    public float jumpForce;
+    public float playerGravity;
+    public float lookSensitivity;
+    private float rotationX = 0;
+    public bool canMove = true;
 
-    public Transform orientation;
+    Vector3 moveDirection = Vector3.zero;
 
-    float horizontalInput;
-    float verticalInput;
-
-    Vector3 moveDirection;
-
-    Rigidbody rb;
+    CharacterController characterController;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
+        characterController = GetComponent<CharacterController>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        characterController.detectCollisions = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        Vector3 forward = transform.TransformDirection(Vector3.forward);
+        Vector3 right = transform.TransformDirection(Vector3.right);
+
+        bool sprinting = Input.GetKey(KeyCode.LeftShift);
+        float currentSpeedX;
+        if (canMove == true)
         {
-            moveSpeed = runSpeed;
+            if (sprinting == true)
+            {
+                currentSpeedX = sprintSpeed * Input.GetAxis("Vertical");
+            }
+            else
+            {
+                currentSpeedX = walkSpeed * Input.GetAxis("Vertical");
+            }
         }
         else
         {
-            moveSpeed = walkSpeed;
+            currentSpeedX = 0;
         }
-        PlayerInput();
-        
-        SpeedControl();
-    }
-
-    private void FixedUpdate()
-    {
-        MovePlayer();
-    }
-
-    private void PlayerInput()
-    {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-    }
-
-    private void MovePlayer()
-    {
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-        rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-    }
-
-    private void SpeedControl()
-    {
-        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.y);
-
-        if (flatVel.magnitude > moveSpeed)
+        float currentSpeedY;
+        if (canMove == true)
         {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            if (sprinting == true)
+            {
+                currentSpeedY = sprintSpeed * Input.GetAxis("Horizontal");
+            }
+            else
+            {
+                currentSpeedY = walkSpeed * Input.GetAxis("Horizontal");
+            }
+        }
+        else
+        {
+            currentSpeedY = 0;
+        }
+        float movementDirectionY = moveDirection.y;
+        moveDirection = (forward * currentSpeedX) + (right * currentSpeedY);
+
+        if (Input.GetKeyDown(KeyCode.Space) && canMove == true && characterController.isGrounded == true)
+        {
+            moveDirection.y = jumpForce;
+        }
+        else
+        {
+            moveDirection.y = movementDirectionY;
+        }
+
+        if (characterController.isGrounded == false)
+        {
+            moveDirection.y -= playerGravity * Time.deltaTime;
+        }
+
+        characterController.Move(moveDirection * Time.deltaTime);
+
+        if (canMove == true)
+        {
+            rotationX += -Input.GetAxis("Mouse Y") * lookSensitivity;
+            rotationX = Mathf.Clamp(rotationX, -90, 90);
+            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+            transform.rotation = transform.rotation * Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSensitivity, 0);
         }
     }
 }

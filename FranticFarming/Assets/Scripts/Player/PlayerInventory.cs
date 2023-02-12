@@ -278,14 +278,17 @@ public class PlayerInventory : MonoBehaviour
                     if (money >= currentStar1Requirement)
                     {
                         lcStar1Image.sprite = earnedStar;
+                        PlayerPrefs.SetInt("TutorialStars", 1);
                     }
                     if (money >= currentStar2Requirement)
                     {
                         lcStar2Image.sprite = earnedStar;
+                        PlayerPrefs.SetInt("TutorialStars", 2);
                     }
                     if (money >= currentStar3Requirement)
                     {
                         lcStar3Image.sprite = earnedStar;
+                        PlayerPrefs.SetInt("TutorialStars", 3);
                     }
                 }
             }

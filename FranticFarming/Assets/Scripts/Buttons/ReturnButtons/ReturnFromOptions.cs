@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ReturnFromOptions : MonoBehaviour
 {
@@ -12,6 +13,18 @@ public class ReturnFromOptions : MonoBehaviour
     {
         audioSource.PlayOneShot(buttonPressed);
         optionsCanvasObject.GetComponent<Canvas>().sortingOrder = 0;
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            GameObject.Find("EventSystem").GetComponent<TutorialRequirements>().UpdateValues();
+        }
+        if (SceneManager.GetActiveScene().name == "LevelOneScene") 
+        {
+            GameObject.Find("EventSystem").GetComponent<LevelOneRequirements>().UpdateValues();
+        }
+        if (SceneManager.GetActiveScene().name == "LevelTwoScene")
+        {
+            //GameObject.Find("EventSystem").GetComponent<LevelTwoRequirements>().UpdateSensitivity();
+        }
         optionsCanvasObject.SetActive(false);
     }
 }

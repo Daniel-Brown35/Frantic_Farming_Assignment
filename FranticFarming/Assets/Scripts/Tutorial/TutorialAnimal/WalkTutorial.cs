@@ -160,6 +160,7 @@ public class WalkTutorial : MonoBehaviour
         thoughtBubble.SetActive(true);
         angerTimer.SetActive(true);
         reset = true;
+        canBePickedUp = false;
         hungryUITutorial.ResetVariables();
     }
 
