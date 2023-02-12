@@ -6,37 +6,52 @@ using UnityEngine.UI;
 public class LevelSelectButtons : MonoBehaviour
 {
     private LevelSelector levelSelector;
-    public Button tutorialButton;
-    public Button levelOneButton;
-    public Button levelTwoButton;
-    public Color selectedColor;
-    public Color notSelectedColor;
+    public GameObject tutorialButtonObject;
+    public GameObject levelOneButtonObject;
+    public GameObject levelTwoButtonObject;
+    private Image tutorialButtonImage;
+    private Image levelOneButtonImage;
+    private Image levelTwoButtonImage;
+    public Sprite tutorialNotSelectedSprite;
+    public Sprite levelOneNotSelectedSprite;
+    public Sprite levelTwoNotSelectedSprite;
+    public Sprite tutorialSelectedSprite;
+    public Sprite levelOneSelectedSprite;
+    public Sprite levelTwoSelectedSprite;
 
+    public AudioSource audioSource;
+    public AudioClip buttonSelect;
     void Start()
     {
         levelSelector = GameObject.Find("EventSystem").GetComponent<LevelSelector>();
-        tutorialButton.GetComponent<Image>().color = selectedColor;
+        tutorialButtonImage = tutorialButtonObject.GetComponent<Image>();
+        levelOneButtonImage = levelOneButtonObject.GetComponent<Image>();
+        levelTwoButtonImage = levelTwoButtonObject.GetComponent<Image>();
+        tutorialButtonImage.sprite = tutorialSelectedSprite;
     }
 
     public void TutorialClicked()
     {
+        audioSource.PlayOneShot(buttonSelect);
         levelSelector.levelSelected = 0;
-        tutorialButton.GetComponent<Image>().color = selectedColor;
-        levelOneButton.GetComponent<Image>().color = notSelectedColor;
-        levelTwoButton.GetComponent<Image>().color = notSelectedColor;
+        tutorialButtonImage.sprite = tutorialSelectedSprite;
+        levelOneButtonImage.sprite = levelOneNotSelectedSprite;
+        levelTwoButtonImage.sprite = levelTwoNotSelectedSprite;
     }
     public void LevelOneClicked()
     {
+        audioSource.PlayOneShot(buttonSelect);
         levelSelector.levelSelected = 1;
-        tutorialButton.GetComponent<Image>().color = notSelectedColor;
-        levelOneButton.GetComponent<Image>().color = selectedColor;
-        levelTwoButton.GetComponent<Image>().color = notSelectedColor;
+        tutorialButtonImage.sprite = tutorialNotSelectedSprite;
+        levelOneButtonImage.sprite = levelOneSelectedSprite;
+        levelTwoButtonImage.sprite = levelTwoNotSelectedSprite;
     }
     public void LevelTwoClicked()
     {
+        audioSource.PlayOneShot(buttonSelect);
         levelSelector.levelSelected = 2;
-        tutorialButton.GetComponent<Image>().color = notSelectedColor;
-        levelOneButton.GetComponent<Image>().color = notSelectedColor;
-        levelTwoButton.GetComponent<Image>().color = selectedColor;
+        tutorialButtonImage.sprite = tutorialNotSelectedSprite;
+        levelOneButtonImage.sprite = levelOneNotSelectedSprite;
+        levelTwoButtonImage.sprite = levelTwoSelectedSprite;
     }
 }

@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class QuitButton : MonoBehaviour
+public class LeaveTP : MonoBehaviour
 {
     public AudioSource audioSource;
     public AudioClip buttonSelect;
-    public void QuitButtonClick()
+    public void ManualExit()
     {
         audioSource.PlayOneShot(buttonSelect);
-        Application.Quit();
+        GameObject.Find("TradingPostPlaceholder").GetComponent<TradingPost>().DeactivateTP();
     }
 }

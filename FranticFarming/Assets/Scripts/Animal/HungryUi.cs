@@ -32,13 +32,6 @@ public class HungryUi : MonoBehaviour
     private bool doOnce2T;
     private bool doOnce3T;
 
-
-    void Start()
-    {
-        GameObject otherGameObject;
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -95,7 +88,7 @@ public class HungryUi : MonoBehaviour
             if (mooOnce == false)
             {
                 mooOnce = true;
-            audioSource.PlayOneShot(angrierCowMoo);
+                audioSource.PlayOneShot(angrierCowMoo);
             }
         }
         else if (percent < 0.50 && doOnce2T == false)
@@ -126,7 +119,7 @@ public class HungryUi : MonoBehaviour
             if (angryMooOnce == false)
             {
                 angryMooOnce = true;
-            audioSource.PlayOneShot(angryCowMoo);
+                audioSource.PlayOneShot(angryCowMoo);
             }
         }
         else if (percent < 0.75 && doOnce1T == false)
@@ -157,7 +150,7 @@ public class HungryUi : MonoBehaviour
             if (angrierMooOnce == false)
             {
                 angrierMooOnce = true;
-            audioSource.PlayOneShot(cowMoo);
+                audioSource.PlayOneShot(cowMoo);
             }
         }
     }

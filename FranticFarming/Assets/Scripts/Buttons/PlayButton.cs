@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class PlayButton : MonoBehaviour
 {
 private LevelSelector levelSelector;
+	public AudioSource audioSource;
+	public AudioClip buttonSelect;
 
 	void Start()
 	{
@@ -13,8 +15,9 @@ private LevelSelector levelSelector;
 	}
     public void PlayButtonClick()
 	{
-		if (SceneManager.GetActiveScene().buildIndex == 0)
-		{
+        audioSource.PlayOneShot(buttonSelect);
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+		{		
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 		}
 		if (SceneManager.GetActiveScene().buildIndex == 1)

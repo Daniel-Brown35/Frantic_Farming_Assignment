@@ -6,6 +6,7 @@ public class FPSCamera : MonoBehaviour
 {
     public float sensitivityX;
     public float sensitivityY;
+    private TradingPost tradingPost;
 
     public Transform orientation;
 
@@ -21,24 +22,25 @@ public class FPSCamera : MonoBehaviour
         Cursor.visible = false;
 
         pauseMenuActivator = GameObject.Find("EventSystem").GetComponent<PauseMenuActivator>();
+        tradingPost = GameObject.Find("TradingPostPlaceholder").GetComponent<TradingPost>();
     }
 
     // Update is called once per frame
     void Update()
     {
         // get mouse input
-        if (pauseMenuActivator.gamePaused == false)
+        if (pauseMenuActivator.gamePaused == false && tradingPost.activelyTrading == false)
         {
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * sensitivityX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * sensitivityY;
+            float mouseX = Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * sensitivityX;
+            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * sensitivityY;
 
-        rotationY += mouseX;
-        rotationX -= mouseY;
-        rotationX = Mathf.Clamp(rotationX, -90f, 90f);
+            rotationY += mouseX;
+            rotationX -= mouseY;
+            rotationX = Mathf.Clamp(rotationX, -90f, 90f);
 
-        // rotate cam and orientation
-        transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
-        orientation.rotation = Quaternion.Euler(0, rotationY, 0);
+            // rotate cam and orientation
+            transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+            orientation.rotation = Quaternion.Euler(0, rotationY, 0);
         }
     }
 }

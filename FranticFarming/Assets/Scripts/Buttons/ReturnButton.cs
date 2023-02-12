@@ -5,8 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class ReturnButton : MonoBehaviour
 {
+    public AudioSource audioSource;
+    public AudioClip buttonSelect;
     public void ReturnButtonClicked()
     {
+        audioSource.PlayOneShot(buttonSelect);
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);

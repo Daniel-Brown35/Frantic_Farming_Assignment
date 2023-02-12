@@ -25,7 +25,7 @@ public class Gun : MonoBehaviour
     int ammoType;
 
     bool shooting;
-    bool readyToShoot;
+    public bool readyToShoot;
     bool reloading;
 
     public Camera playerCamera;
