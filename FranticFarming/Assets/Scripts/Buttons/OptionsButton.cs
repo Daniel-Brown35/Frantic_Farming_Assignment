@@ -5,12 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class OptionsButton : MonoBehaviour
 {
+    public GameObject optionsCanvasObject;
+    private Canvas optionsCanvas;
     public AudioSource audioSource;
     public AudioClip buttonSelect;
 
-    public void OptionsButtonClick()
+    private void Start()
+    {
+        optionsCanvas = optionsCanvasObject.GetComponent<Canvas>();
+    }
+
+    public void OptionsButtonPressed()
     {
         audioSource.PlayOneShot(buttonSelect);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 5);
+        optionsCanvasObject.SetActive(true);
+        optionsCanvas.sortingOrder = 2;
     }
 }

@@ -8,6 +8,7 @@ public class TutorialGate1 : MonoBehaviour
     public GameObject openGate;
     private BoxCollider gateCollider;
     public HungryUiTutorial hungryUiTutorialScript;
+    private TutorialSignpost1 tutorialSignpost1;
 
 
     // Start is called before the first frame update
@@ -16,6 +17,7 @@ public class TutorialGate1 : MonoBehaviour
         closedGate.SetActive(true);
         openGate.SetActive(false);
         gateCollider = GetComponent<BoxCollider>();
+        tutorialSignpost1 = GameObject.Find("TutorialSign1").GetComponent<TutorialSignpost1>();
     }
 
     // Update is called once per frame

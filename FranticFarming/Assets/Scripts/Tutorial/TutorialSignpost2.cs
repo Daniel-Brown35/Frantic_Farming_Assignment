@@ -10,18 +10,23 @@ public class TutorialSignpost2 : MonoBehaviour
     public GameObject tutorialSignCanvas;
     public TMP_Text tutorialText;
     private bool onLastPage;
+    private Gun gun;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         tutorialSignCanvas.SetActive(false);
+        gun = GameObject.Find("Gun").GetComponent<Gun>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (playerInRange == true && Input.GetKeyDown(KeyCode.E))
         {
+            gun.readyToShoot = false;
             onLastPage = false;
             signpostActive = true;
             tutorialSignCanvas.SetActive(true);
@@ -39,6 +44,7 @@ public class TutorialSignpost2 : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                gun.readyToShoot = true;
                 signpostActive = false;
                 tutorialSignCanvas.SetActive(false);
             }

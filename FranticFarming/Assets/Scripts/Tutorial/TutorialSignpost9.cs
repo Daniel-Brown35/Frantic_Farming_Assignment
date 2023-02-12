@@ -12,6 +12,7 @@ public class TutorialSignpost9 : MonoBehaviour
     public GameObject tutorialCow;
     public GameObject tutorialSheep;
     public GameObject tutorialChicken;
+    private Gun gun;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class TutorialSignpost9 : MonoBehaviour
         tutorialCow.SetActive(false);
         tutorialSheep.SetActive(false);
         tutorialChicken.SetActive(false);
+        gun = GameObject.Find("Gun").GetComponent<Gun>();
     }
 
     // Update is called once per frame
@@ -27,6 +29,7 @@ public class TutorialSignpost9 : MonoBehaviour
     {
         if (playerInRange == true && Input.GetKeyDown(KeyCode.E))
         {
+            gun.readyToShoot = false;
             signpostActive = true;
             tutorialSignCanvas.SetActive(true);
             tutorialText.text = "You've learned all the core gameplay mechanics of Frantic Farming, on your left is a pen with animals in it for you to practice your new skills. You can go back to the previous area to refill your ammo. To end the tutorial sell any of the produce the animals drop at the trading post in the barn in front of you.";
@@ -36,6 +39,7 @@ public class TutorialSignpost9 : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                gun.readyToShoot = true;
                 signpostActive = false;
                 tutorialSignCanvas.SetActive(false);
                 tutorialCow.SetActive(true);

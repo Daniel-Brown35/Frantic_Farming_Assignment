@@ -5,11 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class CreditsButton : MonoBehaviour
 {
+    public GameObject creditsCanvasObject;
+    private Canvas creditsCanvas;
     public AudioSource audioSource;
     public AudioClip buttonSelect;
+
+    private void Start()
+    {
+        creditsCanvas = creditsCanvasObject.GetComponent<Canvas>();
+    }
     public void CreditsButtonClick()
     {
         audioSource.PlayOneShot(buttonSelect);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 6);
+        creditsCanvasObject.SetActive(true);
+        creditsCanvas.sortingOrder = 2;
     }
 }

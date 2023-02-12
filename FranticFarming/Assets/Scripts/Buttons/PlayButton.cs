@@ -16,12 +16,6 @@ private LevelSelector levelSelector;
     public void PlayButtonClick()
 	{
         audioSource.PlayOneShot(buttonSelect);
-        if (SceneManager.GetActiveScene().buildIndex == 0)
-		{		
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-		}
-		if (SceneManager.GetActiveScene().buildIndex == 1)
-		{
 			if (levelSelector.levelSelected == 0)
 			{
 				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -34,6 +28,5 @@ private LevelSelector levelSelector;
 			{
 				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
 			}
-		}
 	}
 }

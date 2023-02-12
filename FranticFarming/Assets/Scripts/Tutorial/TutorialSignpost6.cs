@@ -9,11 +9,13 @@ public class TutorialSignpost6 : MonoBehaviour
     private bool signpostActive;
     public GameObject tutorialSignCanvas;
     public TMP_Text tutorialText;
+    private Gun gun;
 
     // Start is called before the first frame update
     void Start()
     {
         tutorialSignCanvas.SetActive(false);
+        gun = GameObject.Find("Gun").GetComponent<Gun>();
     }
 
     // Update is called once per frame
@@ -21,6 +23,7 @@ public class TutorialSignpost6 : MonoBehaviour
     {
         if (playerInRange == true && Input.GetKeyDown(KeyCode.E))
         {
+            gun.readyToShoot = false;
             signpostActive = true;
             tutorialSignCanvas.SetActive(true);
             tutorialText.text = "Animals request random food, so it's important to stay topped up on your food ammunition. To the right is more grass to harvest, to the left is a grain field and an apple orchard. To proceed, completely fill up all three of your gun's ammo stockpiles. That's 20 per ammo type!";
@@ -30,6 +33,7 @@ public class TutorialSignpost6 : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                gun.readyToShoot = true;
                 signpostActive = false;
                 tutorialSignCanvas.SetActive(false);
             }
