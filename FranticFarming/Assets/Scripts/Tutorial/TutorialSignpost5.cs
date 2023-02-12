@@ -43,7 +43,7 @@ public class TutorialSignpost5 : MonoBehaviour
             tutorialSignImage.sprite = tutorialSignImageNext;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            tutorialText.text = "Now it's time to learn about frantic animals. Animals get frantic when their hunger bar is empty, when this happens, they will break out of their pen and attack you causing you to drop all the produce you have on the ground, to be collected again. After they've took their rage out on you, you can pacify them by shooting them with the food they want.";
+            tutorialText.text = "Now it's time to learn about frantic animals. Animals get frantic when their hunger bar is empty, when this happens, they will break out of their pen and attack you causing you to drop all the produce you have on the ground, to be collected again. You can pacify them as they make their way to take their rage out on you by shooting them with the food they want.";
                 
         }
     }
@@ -64,7 +64,7 @@ public class TutorialSignpost5 : MonoBehaviour
         if (signpostActive == true && onLastPage == false)
         {
             tutorialText.text = "Once the animal is pacified it must be returned to its pen and the fence must be repaired to prevent them from escaping again." +
-                    "To return an animal to its pen, grab the animal by pressing F, walk to the pen and press E again to place it back down. To repair the fence press R. Pacify the cow, place it back in the pen and repair the fence!";
+                    "To return an animal to its pen, grab the animal by pressing F, walk to the pen and press F again to place it back down. To repair the fence press R. Pacify the cow, place it back in the pen and repair the fence!";
             onLastPage = true;
             tutorialSignImage.sprite = tutorialSignImageClose;
         }
