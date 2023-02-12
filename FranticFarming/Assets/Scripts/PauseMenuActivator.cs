@@ -54,9 +54,13 @@ public class PauseMenuActivator : MonoBehaviour
     public void UnpauseGame()
     {
         audioSource.PlayOneShot(buttonPressed);
-        pauseMenu.SetActive(false);
-        GameObject.Find("EventSystem").GetComponent<PauseMenuActivator>().gamePaused = false;
         gamePaused = false;
+        if (optionsCanvasObject.activeInHierarchy == true)
+        {
+            GameObject.Find("OptionsCanvas").GetComponentInChildren<ReturnFromOptions>().ReturnFromOptionsPressed();
+        }
+        optionsCanvasObject.SetActive(false);
+        pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -66,6 +70,5 @@ public class PauseMenuActivator : MonoBehaviour
     {
         audioSource.PlayOneShot(buttonPressed);
         optionsCanvasObject.SetActive(true);
-        optionsCanvas.sortingOrder = 3;
     }
 }

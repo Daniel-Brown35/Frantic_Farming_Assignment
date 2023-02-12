@@ -12,7 +12,7 @@ public class ReturnFromOptions : MonoBehaviour
     public void ReturnFromOptionsPressed()
     {
         audioSource.PlayOneShot(buttonPressed);
-        optionsCanvasObject.GetComponent<Canvas>().sortingOrder = 0;
+        //optionsCanvasObject.GetComponent<Canvas>().sortingOrder = 0;
         if (SceneManager.GetActiveScene().name == "Tutorial")
         {
             GameObject.Find("EventSystem").GetComponent<TutorialRequirements>().UpdateValues();

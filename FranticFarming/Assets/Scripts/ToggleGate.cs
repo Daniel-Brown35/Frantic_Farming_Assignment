@@ -24,11 +24,7 @@ public class ToggleGate : MonoBehaviour
     {
         if (playerInRange == true && Input.GetKeyDown(KeyCode.E) && isGateOpen == false)
         {
-            GetComponent<Collider>().isTrigger = false;
-            openGate.SetActive(true);
-            closedGate.SetActive(false);
-            gateCollider.enabled = false;
-            isGateOpen = true;
+            OpenGate();
         }
         else
         {
@@ -57,5 +53,33 @@ public class ToggleGate : MonoBehaviour
             playerInRange = false;
 
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent<Walk>(out Walk walkComponent))
+        {
+            if (walkComponent.chasing == true && isGateOpen == false)
+            {
+                OpenGate();
+            }
+        }
+        if (collision.gameObject.TryGetComponent<WalkTutorialFrantic>(out WalkTutorialFrantic walkTutFranticComponent))
+        {
+            if (walkTutFranticComponent.chasing == true && isGateOpen == false)
+            {
+                OpenGate();
+            }
+        }
+   
+    }
+
+    void OpenGate()
+    {
+        GetComponent<Collider>().isTrigger = false;
+        openGate.SetActive(true);
+        closedGate.SetActive(false);
+        gateCollider.enabled = false;
+        isGateOpen = true;
     }
 }
